@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AviSafe Aviation — Authorized Aviation Repair Station</title>
+    <script type="module" crossorigin src="./assets/index-c_4nuuty.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-ceo4jm_n.css">
+    <link rel="stylesheet" href="./assets/header-white.css?v=approvals-simple-ui-2026-08">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="/api-config.js"></script>
+    <script src="/content-manager.js"></script>
+    <script src="/capability-search.js?v=3-fields"></script>
+    <script>
+      (function() {
+        let ready = false;
+        let splashSeen = false;
+        const body = document.body;
+        let noSplashTimer = null;
+
+        function setAppReady() {
+          if (ready) return;
+          ready = true;
+          body.classList.add('app-ready');
+        }
+
+        function getSplash() {
+          return document.querySelector('.splash');
+        }
+
+        function onSplashVisible() {
+          splashSeen = true;
+          if (noSplashTimer) {
+            clearTimeout(noSplashTimer);
+            noSplashTimer = null;
+          }
+        }
+
+        function onSplashHidden() {
+          if (splashSeen) {
+            setAppReady();
+          }
+        }
+
+        function startNoSplashTimer() {
+          if (noSplashTimer) return;
+          noSplashTimer = setTimeout(() => {
+            if (!getSplash()) {
+              setAppReady();
+            }
+          }, 1800);
+        }
+
+        const observer = new MutationObserver(() => {
+          const splash = getSplash();
+          if (splash) {
+            onSplashVisible();
+            if (splash.classList.contains('out')) {
+              onSplashHidden();
+            }
+          } else if (splashSeen) {
+            onSplashHidden();
+          }
+        });
+
+        observer.observe(document.documentElement, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['class']
+        });
+
+        window.addEventListener('load', () => {
+          const splash = getSplash();
+          if (splash) {
+            onSplashVisible();
+            if (splash.classList.contains('out')) {
+              onSplashHidden();
+            }
+          } else {
+            startNoSplashTimer();
+          }
+        }, { once: true });
+      })();
+    </script>
+  </body>
+</html>
+
+<!-- ===== Capability Search + SMS Popups ===== -->
+<div id="cap-search-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;"><div style="background:#fff;border-radius:16px;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;padding:36px 32px;position:relative;box-shadow:0 30px 70px -20px rgba(0,0,0,0.3);"><button onclick="document.getElementById('cap-search-overlay').style.display='none'" style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:16px;color:#64748b;">✕</button><div style="border-left:4px solid #8FD2F4;padding-left:14px;margin-bottom:22px;"><h2 style="font-family:sans-serif;font-size:26px;font-weight:800;color:#8FD2F4;margin:0 0 8px;">Capability Search</h2><p style="font-size:13px;color:#64748b;line-height:1.6;margin:0;">Search our MRO capabilities by part number, aircraft type, or service chapter.</p></div><form onsubmit="event.preventDefault();alert('Search submitted!');document.getElementById('cap-search-overlay').style.display='none';" style="display:flex;flex-direction:column;gap:18px;"><div style="display:grid;grid-template-columns:100px 1fr;align-items:center;gap:12px;"><label style="font-size:13px;font-weight:700;color:#1a202c;">Search</label><input type="text" placeholder="Part#, manufacturer or description" style="width:100%;padding:11px 14px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;outline:none;"></div><div style="display:grid;grid-template-columns:100px 1fr;align-items:center;gap:12px;"><label style="font-size:13px;font-weight:700;color:#1a202c;">Aircraft</label><select style="width:100%;padding:11px 14px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;background:#fff;"><option value="">Please select</option><option>Boeing 737</option><option>Airbus A320</option><option>ATR 72</option><option>MI171A2</option></select></div><div style="display:grid;grid-template-columns:100px 1fr;align-items:center;gap:12px;"><label style="font-size:13px;font-weight:700;color:#1a202c;">Chapter</label><select style="width:100%;padding:11px 14px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;background:#fff;"><option value="">Please select</option><option>Life Raft</option><option>Life Vest</option><option>Oxygen Cylinder</option><option>Escape Slide</option><option>Fire Extinguisher</option></select></div><div style="display:flex;gap:14px;justify-content:center;margin-top:8px;"><button type="submit" style="background:#8FD2F4;color:#fff;border:none;padding:11px 28px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;">SEARCH</button><button type="reset" style="background:#8FD2F4;color:#fff;border:none;padding:11px 28px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;">RESET</button></div></form></div></div>
+
+<div id="sms-overlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;"><div style="background:#fff;border-radius:16px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;padding:36px 32px;position:relative;box-shadow:0 30px 70px -20px rgba(0,0,0,0.3);"><button onclick="document.getElementById('sms-overlay').style.display='none'" style="position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:16px;color:#64748b;">✕</button><div style="text-align:center;margin-bottom:24px;"><div style="width:56px;height:56px;border-radius:50%;background:rgba(143,210,244,0.1);border:2px solid #8FD2F4;display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:24px;">✉</div><h2 style="font-size:24px;font-weight:800;color:#1a202c;margin:0 0 6px;">Send SMS</h2><p style="font-size:13px;color:#64748b;margin:0;">Get instant updates & quick support via SMS</p></div><form onsubmit="event.preventDefault();alert('SMS sent successfully!');document.getElementById('sms-overlay').style.display='none';" style="display:flex;flex-direction:column;gap:16px;"><div><label style="font-size:13px;font-weight:700;color:#1a202c;display:block;margin-bottom:5px;">Full Name *</label><input type="text" required placeholder="Enter your name" style="width:100%;padding:12px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none;"></div><div><label style="font-size:13px;font-weight:700;color:#1a202c;display:block;margin-bottom:5px;">Mobile Number *</label><input type="tel" required placeholder="+91 XXXXX XXXXX" style="width:100%;padding:12px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none;"></div><div><label style="font-size:13px;font-weight:700;color:#1a202c;display:block;margin-bottom:5px;">Service Required</label><select style="width:100%;padding:12px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;background:#fff;"><option value="">Select service</option><option>HST Of Cylinders</option><option>Escape Slide</option><option>Life Raft</option><option>Life Vest</option><option>Oxygen Cylinder</option><option>Aircraft Fire Extinguishers</option></select></div><div><label style="font-size:13px;font-weight:700;color:#1a202c;display:block;margin-bottom:5px;">Message</label><textarea placeholder="Type your message..." rows="3" style="width:100%;padding:12px 14px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;outline:none;resize:vertical;"></textarea></div><button type="submit" style="background:#8FD2F4;color:#fff;border:none;padding:14px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;width:100%;margin-top:4px;">Send SMS ✈</button></form></div></div>
+
+<script>
+(function(){function addLink(nav,id,label,onClick){if(!nav||nav.querySelector('#'+id))return false;var link=document.createElement('a');link.id=id;link.href='#';link.textContent=label;link.style.cssText='font-weight:600;font-size:14.5px;color:#1a202c;white-space:nowrap;padding:10px 14px;border-radius:8px;cursor:pointer;text-decoration:none;transition:color .2s;';link.onmouseenter=function(){link.style.color='#8FD2F4';};link.onmouseleave=function(){link.style.color='#1a202c';};link.onclick=function(e){e.preventDefault();onClick();};var anchor=nav.querySelector('.navbar-cta,.navbar-search,.navbar-theme,.navbar-burger');nav.insertBefore(link,anchor||null);return true}function wire(){var cap=document.getElementById('cap-search-overlay');var sms=document.getElementById('sms-overlay');var nav=document.querySelector('.navbar-links');if(!cap||!sms||!nav)return false;addLink(nav,'cap-link','Capability Search',function(){window.location.href='/capability-search';});if(window.location.pathname==='/capability-search'){var cl=nav.querySelector('#cap-link');if(cl)cl.classList.add('active');}
+addLink(nav,'sms-link','SMS',function(){window.location.href='/sms';});if(window.location.pathname==='/sms'){var sl=nav.querySelector('#sms-link');if(sl)sl.classList.add('active');};cap.onclick=function(e){if(e.target===cap)cap.style.display='none'};sms.onclick=function(e){if(e.target===sms)sms.style.display='none'};return true}function init(){if(wire())return;var tries=0;var timer=setInterval(function(){tries+=1;if(wire()||tries>40)clearInterval(timer)},100);var observer=new MutationObserver(function(){wire()});observer.observe(document.documentElement,{childList:true,subtree:true});window.addEventListener('load',wire,{once:true})}init();})();
+</script>
+
+<script>
+(() => {
+  if (!new URLSearchParams(location.search).has('capability-search')) return;
+  const openCapabilitySearch = () => {
+    const overlay = document.getElementById('cap-search-overlay');
+    if (!overlay) return false;
+    overlay.style.display = 'flex';
+    history.replaceState(null, '', location.pathname);
+    return true;
+  };
+  if (openCapabilitySearch()) return;
+  const timer = setInterval(() => { if (openCapabilitySearch()) clearInterval(timer); }, 50);
+  setTimeout(() => clearInterval(timer), 5000);
+})();
+</script>
+
+<script>
+(() => {
+  if (location.pathname !== '/sms') return;
+  const page = document.createElement('main');
+  page.id = 'sms-page';
+  page.innerHTML = `<section class="sms-hero"><div class="sms-wrap"><div class="sms-eyebrow">Quick support channel</div><h1>Send an SMS request to our aviation support team.</h1><p>Share your requirement and contact details. Our team will review the request and get back to you with the right assistance.</p></div></section><section class="sms-wrap sms-grid"><aside class="sms-info"><h2>Fast, focused assistance</h2><p>Use this form for service enquiries, repair support or a callback request.</p><div class="sms-benefit"><b>✓</b><div><strong>Service-ready request</strong><span>Tell us the equipment or support you need.</span></div></div><div class="sms-benefit"><b>◷</b><div><strong>Prompt follow-up</strong><span>Your details are sent to our support team securely.</span></div></div><div class="sms-benefit"><b>✈</b><div><strong>Aviation specialists</strong><span>DGCA-approved MRO support for your operation.</span></div></div></aside><section class="sms-card"><h2>Request SMS support</h2><p>Fields marked with * are required.</p><form id="sms-form" class="sms-form"><label>FULL NAME *<input name="name" required placeholder="Enter your name"></label><label>MOBILE NUMBER *<input name="phone" required type="tel" placeholder="+91 XXXXX XXXXX"></label><label class="sms-full">SERVICE REQUIRED<select name="service"><option value="">Select a service</option><option>HST Of Cylinders</option><option>Escape Slide</option><option>Life Raft</option><option>Life Vest</option><option>Oxygen Cylinder</option><option>Aircraft Fire Extinguishers</option></select></label><label class="sms-full">MESSAGE<textarea name="message" placeholder="Tell us how we can help"></textarea></label><button type="submit">Submit SMS Request →</button><p class="sms-status" role="status"></p></form></section></section>`;
+  const setSmsHeader = () => {
+    const header = document.querySelector('.navbar');
+    const nav = header?.querySelector('.navbar-links');
+    if (!header || !nav || header.dataset.smsHeaderReady) return;
+    header.dataset.smsHeaderReady = 'true';
+    nav.innerHTML = '';
+    [
+      ['Home', '/'],
+      ['Approvals', '/approvals'],
+      ['About Us', '/about'],
+      ['Contact Us', '/contact']
+    ].forEach(([label, href]) => {
+      const link = document.createElement('a');
+      link.href = href;
+      link.textContent = label;
+      if (href === '/') link.className = 'active';
+      nav.appendChild(link);
+    });
+    const capability = document.createElement('a');
+    capability.href = '/capability-search';
+    capability.textContent = 'Capability Search';
+    nav.appendChild(capability);
+    const sms = document.createElement('a');
+    sms.href = '/sms';
+    sms.textContent = 'SMS';
+    nav.appendChild(sms);
+  };
+  const mount = () => {
+    const root = document.getElementById('root');
+    if (!root || root.dataset.smsMounted) return;
+    const header = root.querySelector('.navbar');
+    if (!header) return;
+    root.dataset.smsMounted = 'true';
+    // Hide React content but don't remove (keeps React interactive)
+    root.querySelectorAll('main, footer, .hero-d, .services-lite, .customers-lite, .stats-lite-wrap, .why-choose, .home-achieve, .home-address, .approved-lite').forEach(el => el.style.display = 'none');
+    // Also hide sections that show after navbar
+    const allSections = root.querySelectorAll('section, .section');
+    allSections.forEach(el => { if(!el.closest('.navbar') && !el.closest('header')) el.style.display = 'none'; });
+    header.insertAdjacentElement('afterend', page);
+    const form = page.querySelector('#sms-form'), status = page.querySelector('.sms-status');
+    form.addEventListener('submit', async event => {
+      event.preventDefault(); const button=form.querySelector('button'), data=Object.fromEntries(new FormData(form)); button.disabled=true; button.textContent='Submitting…';
+      try { const response=await fetch('/api/v1/submissions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({formType:'query',name:data.name,phone:data.phone,service:data.service,message:data.message,sourcePath:'/sms'})}); if(!response.ok) throw new Error(); form.reset(); status.textContent='Thank you — your SMS support request has been received.'; status.className='sms-status success'; }
+      catch { status.textContent='Unable to submit right now. Please try again.'; status.className='sms-status error'; }
+      finally { button.disabled=false; button.textContent='Submit SMS Request →'; }
+    });
+  };
+  const timer=setInterval(() => { mount(); if(document.getElementById('root')?.dataset.smsMounted) clearInterval(timer); }, 50);
+})();
+</script>
+
+<script>
+// Fix active nav highlight when navigating via search popup
+(function(){
+  function fixNav(){
+    var nav=document.querySelector('.navbar-links');
+    if(!nav) return;
+    var path=window.location.pathname;
+    var links=nav.querySelectorAll('a');
+    links.forEach(function(link){
+      link.classList.remove('active');
+      var href=link.getAttribute('href');
+      var id=link.id;
+      if(id==='cap-link' && path==='/capability-search') link.classList.add('active');
+      else if(id==='sms-link' && path==='/sms') link.classList.add('active');
+      else if(path==='/' && href==='/') link.classList.add('active');
+      else if(href && href!=='/' && href!=='#' && path.startsWith(href)) link.classList.add('active');
+    });
+  }
+
+  // Force full reload when navigating away from /capability-search or /sms
+  // AND when navigating TO /capability-search or /sms from other pages
+  function interceptNavLinks(){
+    document.addEventListener('click', function(e){
+      var link=e.target.closest('a');
+      if(!link) return;
+      var href=link.getAttribute('href');
+      if(!href || href==='#') return;
+      var path=window.location.pathname;
+      
+      // If ON capability-search or sms — force reload for ANY internal link
+      if(path==='/capability-search' || path==='/sms'){
+        if(href.startsWith('/')){
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          window.location.href=href;
+          return;
+        }
+      }
+      
+      // If clicking capability-search or sms link from ANY page — force reload
+      if(href==='/capability-search' || href==='/sms'){
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        window.location.href=href;
+      }
+      
+      // Force ALL internal nav links to do full page reload
+      if(href.startsWith('/') && link.closest('.navbar-links,.navbar-logo,.navbar,header')){
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        window.location.href=href;
+      }
+    }, true);
+  }
+  interceptNavLinks();
+  }
+  var lastPath=window.location.pathname;
+  setInterval(function(){
+    if(window.location.pathname!==lastPath){
+      lastPath=window.location.pathname;
+      setTimeout(fixNav,100);
+    }
+  },200);
+  // Run on initial load too — multiple times to catch injected links
+  setTimeout(fixNav,2000);
+  setTimeout(fixNav,3000);
+  setTimeout(fixNav,4000);
+})();
+</script>

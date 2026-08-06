@@ -1,0 +1,1 @@
+window.AVIASAFE_API_BASE = window.AVIASAFE_API_BASE || '';

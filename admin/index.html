@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AviaSafe Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/styles.css?v=admin-dark-theme-complete-2026-08">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand" style="cursor:pointer" onclick="document.querySelector('.nav-item[data-view=dashboard]').click()"><div class="brand-mark">♜</div><div><b>AviaSafe</b><small>Control Studio</small></div></div>
+    <nav>
+      <button class="nav-item active" data-view="dashboard"><span>◫</span> Dashboard</button>
+      <div id="masterMenu" class="master-menu"></div>
+      <button class="nav-item media-nav" data-view="media"><span>▧</span> Media Library</button>
+      <button class="nav-item" data-view="catalog"><span>⚙</span> Service Catalog</button>
+      <button class="nav-item" data-view="capabilities"><span>⌕</span> Capability Master</button>
+      <button class="nav-item" data-view="navigation"><span>☷</span> Header Menu</button>
+      <button class="nav-item" data-view="submissions"><span>✉</span> Enquiries <i id="submissionBadge" class="nav-badge">0</i></button>
+      <button class="nav-item" data-view="seo"><span>◎</span> SEO Manager</button>
+      <div class="nav-label">SYSTEM</div>
+      <button class="nav-item" data-view="backup"><span>↻</span> Backup & Restore</button>
+      <button class="nav-item" data-view="profile"><span>♙</span> My Profile</button>
+    </nav>
+    <a class="view-site" href="/" target="_blank">View live website ↗</a>
+  </aside>
+
+  <main>
+    <header class="topbar"><button class="top-menu" id="sidebarToggle" aria-label="Toggle sidebar">☰</button><div class="top-actions"><label class="top-search"><span>⌕</span><input id="adminGlobalSearch" placeholder="Search anything..." autocomplete="off"><kbd>⌘ K</kbd><div id="adminSearchResults" class="admin-search-results" hidden></div></label><button class="top-icon" id="themeToggle" aria-label="Change theme">☼</button><button class="top-icon bell" id="notificationToggle" aria-label="Notifications">♧<i id="notificationCount">3</i></button><div id="notificationPanel" class="notification-panel" hidden><div><b>Notifications</b><button id="markNotificationsRead">Mark all read</button></div><article><span>⌂</span><p><b>Website content is connected</b><small>Pages are publishing through the API.</small></p></article><article><span>⌕</span><p><b>Capability Master ready</b><small>Search records can now be managed.</small></p></article><article><span>✉</span><p><b>Check new enquiries</b><small>Open Enquiries to review submissions.</small></p></article></div><button class="admin-user" id="profileShortcut"><div class="avatar" id="headerAvatar">AD</div><div><b id="headerUserName">Administrator</b><small id="headerUserRole">Super Admin</small></div><span>⌄</span></button></div></header>
+    <div class="crumb-bar"><span>Admin</span><i>/</i><b id="crumb">Dashboard</b></div>
+    <section id="dashboard" class="view active">
+      <div class="dash-welcome panel"><div class="dash-title-row"><div><h1>Welcome back, Admin <span>👋</span></h1><p>Manage every page, image and piece of content from one place.</p></div><button class="primary purple-btn" id="quickEdit">✎ &nbsp; Edit Website</button></div>
+        <div class="stats dash-stats">
+          <article><div class="stat-icon violet">▤</div><div><small>PAGE MASTERS</small><strong>9</strong><p>All pages active</p></div><em class="trend purple">↗ 12%</em></article>
+          <article><div class="stat-icon green">⌕</div><div><small>SERVICES</small><strong id="serviceCount">0</strong><p>Showcased in website</p></div><em class="trend green-t">↗ 8%</em></article>
+          <article><div class="stat-icon orange">▧</div><div><small>MEDIA ASSETS</small><strong id="dashboardMediaCount">0</strong><p>Images & graphics</p></div><em class="trend orange-t">↗ 20%</em></article>
+        </div>
+      </div>
+      <div class="panel dash-pages">
+        <div class="panel-title"><div><h2>Page Masters</h2><p>Select a page to manage its content</p></div><button class="outline-purple" data-go="pages">View All</button></div>
+        <div id="pageGrid" class="page-grid"></div>
+      </div>
+      <div class="dashboard-bottom">
+        <div class="panel overview-card"><div class="panel-title"><div><h2>Website Overview</h2><p>Quick stats at a glance</p></div><select><option>This Week</option></select></div><div class="overview-content">
+          <div class="chart-wrap"><div class="chart-y"><span>100</span><span>80</span><span>60</span><span>40</span><span>20</span><span>0</span></div><svg viewBox="0 0 620 230" preserveAspectRatio="none"><defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#635bff" stop-opacity=".28"/><stop offset="1" stop-color="#635bff" stop-opacity="0"/></linearGradient></defs><g class="grid-lines"><line x1="0" y1="10" x2="620" y2="10"/><line x1="0" y1="50" x2="620" y2="50"/><line x1="0" y1="90" x2="620" y2="90"/><line x1="0" y1="130" x2="620" y2="130"/><line x1="0" y1="170" x2="620" y2="170"/><line x1="0" y1="210" x2="620" y2="210"/></g><path class="area" d="M0 140 L103 115 L206 55 L310 95 L413 142 L516 102 L620 48 L620 210 L0 210 Z"/><path class="chart-line" d="M0 140 L103 115 L206 55 L310 95 L413 142 L516 102 L620 48"/><g class="points"><circle cx="0" cy="140" r="5"/><circle cx="103" cy="115" r="5"/><circle cx="206" cy="55" r="5"/><circle cx="310" cy="95" r="5"/><circle cx="413" cy="142" r="5"/><circle cx="516" cy="102" r="5"/><circle cx="620" cy="48" r="5"/></g></svg><div class="chart-x"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div></div>
+          <div class="mini-stats"><article><span class="mini-icon violet">♙</span><div><small>Total Visitors</small><b>1,248</b></div></article><article><span class="mini-icon green">◉</span><div><small>Page Views</small><b>3,427</b></div></article><article><span class="mini-icon blue">◷</span><div><small>Avg. Session</small><b>02:48</b></div></article><article><span class="mini-icon orange">↗</span><div><small>Bounce Rate</small><b>32.5%</b></div></article></div>
+        </div></div>
+        <div class="panel activity-card"><div class="panel-title"><div><h2>Recent Activity</h2><p>Latest updates on your website</p></div><button class="outline-purple">View All</button></div><div class="activity-list"><article><span>⌂</span><div><b>Home Page updated</b><small>10 minutes ago</small></div><em class="updated">Updated</em></article><article><span>▧</span><div><b>New image added in Media Library</b><small>1 hour ago</small></div><em class="added">Added</em></article><article><span>◷</span><div><b>Service detail updated</b><small>3 hours ago</small></div><em class="edited">Edited</em></article><article><span>⌕</span><div><b>New service added</b><small>5 hours ago</small></div><em class="added">Added</em></article></div></div>
+      </div>
+    </section>
+
+    <section id="pageManager" class="view">
+      <div class="page-head manager-head"><div><button class="back inline-back" id="managerBack">←</button><div><p class="eyebrow">PAGE MASTER</p><h1 id="managerTitle">Page</h1><p id="managerRoute"></p></div></div><div class="manager-actions"><a id="managerPreview" class="ghost" target="_blank">View page ↗</a><button class="ghost" id="visualEditBtn">Visual editor</button><button class="primary" id="addContentBtn">+ Add content</button></div></div>
+      <div class="placement-help"><div class="help-icon">✦</div><div><b id="pageHelpTitle">How to add content on this page</b><p id="pageHelpText">Click “Add content”, choose Image or Text, then select exactly where it should appear. Use “View page” to check the published result.</p></div><button id="helpAddImage">+ Add an image</button></div>
+      <div class="manager-layout">
+        <div>
+          <div class="panel existing-panel" id="serviceCatalogPanel" hidden><div class="panel-title"><div><h2>Services Catalog</h2><p>Database records powering the Services grid and detail pages.</p></div><span id="catalogCount" class="count-pill">0 services</span></div><div id="serviceCatalogList"></div></div>
+          <div class="panel existing-panel"><div class="panel-title"><div><h2>Existing page content</h2><p>Original headings, text, buttons and images from this page.</p></div><div><span id="syncState" class="sync-state">Syncing page…</span><span id="elementTotal" class="count-pill">0 fields</span></div></div><div class="content-filters"><button class="active" data-filter="all">All</button><button data-filter="heading">Headings</button><button data-filter="text">Text</button><button data-filter="image">Images</button><button data-filter="link">Links</button></div><div id="elementList" class="element-list"><div class="loading-list">Reading website content…</div></div></div>
+          <div class="panel added-panel"><div class="panel-title"><div><h2>Added content</h2><p>New items created from this admin panel.</p></div><span id="blockTotal" class="count-pill">0 items</span></div><div id="blockList" class="block-list"></div></div>
+        </div>
+        <aside class="panel page-settings"><h2>Page settings</h2><label>Master name<input id="settingName"></label><label>Description<textarea id="settingDescription" rows="3"></textarea></label><label>Status<select id="settingStatus"><option value="active">Active</option><option value="draft">Draft</option></select></label><button id="saveSettings" class="primary wide">Update page master</button><div class="api-state"><i></i><div><b>API connected</b><small>Changes publish in real time</small></div></div></aside>
+      </div>
+    </section>
+
+    <section id="pages" class="view">
+      <div class="page-head"><div><p class="eyebrow">CONTENT</p><h1>Page Masters</h1><p>Edit text, images, links and visibility for every website page.</p></div></div>
+      <div class="panel"><div class="table-tools"><input id="pageSearch" placeholder="Search page masters..."><span>9 masters</span></div><div id="pageTable"></div></div>
+    </section>
+
+    <section id="editor" class="view editor-view">
+      <div class="editor-top"><button class="back" id="backPages">←</button><div><p class="eyebrow">VISUAL EDITOR</p><h2 id="editorTitle">Home Page</h2></div><div class="editor-actions"><span id="saveState">Select any content in preview</span><a id="openPage" class="ghost" target="_blank">Open page ↗</a></div></div>
+      <div class="workspace">
+        <div class="preview-wrap"><div class="preview-bar"><i></i><i></i><i></i><span id="previewUrl"></span></div><iframe id="preview"></iframe></div>
+        <aside class="inspector">
+          <div class="inspector-empty" id="emptyInspector"><div>✎</div><h3>Select content</h3><p>Click any text, image or button in the website preview to edit it.</p></div>
+          <form id="editForm" hidden>
+            <div class="selected-tag"><span id="elementTag">TEXT</span><small id="elementSelector"></small></div>
+            <label id="textField">Content<textarea id="fieldText" rows="6"></textarea></label>
+            <label id="srcField">Image source<input id="fieldSrc"><small>Use /img/file.jpg or an image URL</small></label>
+            <label id="altField">Alt text<input id="fieldAlt"></label>
+            <label id="hrefField">Link / destination<input id="fieldHref"></label>
+            <label class="toggle-row"><span><b>Visible on website</b><small>Hide without losing content</small></span><input type="checkbox" id="fieldVisible" checked><i></i></label>
+            <button class="primary wide" type="submit">Save changes</button>
+            <button class="danger wide" type="button" id="deleteElement">Delete / hide element</button>
+            <button class="ghost wide" type="button" id="restoreElement">Restore element</button>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <section id="media" class="view"><div class="page-head"><div><p class="eyebrow">CONTENT</p><h1>Media Library</h1><p>Upload, use and delete website images through the API.</p></div><label class="file-btn">+ Upload image<input type="file" id="mediaUpload" accept="image/*"></label></div><div class="panel"><div id="mediaGrid" class="media-grid"></div></div></section>
+    <section id="catalog" class="view"><div class="page-head"><div><p class="eyebrow">DATABASE CONTENT</p><h1>Service Catalog</h1><p>Manage Services grid cards and dynamic service-detail pages from MySQL.</p></div><button class="primary" id="addCatalogService">+ Add Service</button></div><div class="panel"><div class="panel-title"><div><h2>All services</h2><p>Each record powers one card and one detail page.</p></div><span id="catalogTotal" class="count-pill">0 services</span></div><div id="catalogTable"></div></div></section>
+    <section id="capabilities" class="view"><div class="page-head"><div><p class="eyebrow">DATABASE MASTER</p><h1>Capability Search Master</h1><p>Add, edit, hide or delete the records shown on the public Capability Search page.</p></div><div class="manager-actions"><a class="ghost" href="/capability-search" target="_blank">View search page ↗</a><button class="primary" id="addCapability">+ Add Capability</button></div></div><div class="cap-admin-stats"><article><small>TOTAL RECORDS</small><b id="capAdminTotal">0</b></article><article><small>PUBLISHED</small><b id="capAdminPublished">0</b></article><article><small>AIRCRAFT</small><b id="capAdminAircraft">0</b></article><article><small>CHAPTERS</small><b id="capAdminChapters">0</b></article></div><div class="panel"><div class="table-tools cap-tools"><input id="capAdminSearch" placeholder="Search part number, manufacturer, aircraft..."><select id="capAdminFilter"><option value="">All chapters</option></select><span id="capAdminCount">0 records</span></div><div id="capabilityTable"></div></div></section>
+    <section id="navigation" class="view"><div class="page-head"><div><p class="eyebrow">WEBSITE SETTINGS</p><h1>Header Menu</h1><p>Control the links shown in the public website header.</p></div><button class="primary" id="addMenuBtn">+ Add menu item</button></div><div class="menu-layout"><div class="panel"><div class="panel-title"><div><h2>Website navigation</h2><p>Items publish in this order from left to right.</p></div><span id="menuCount" class="count-pill">0 links</span></div><div id="menuList"></div></div><aside class="menu-preview"><small>LIVE HEADER PREVIEW</small><div class="preview-logo">AviaSafe</div><nav id="menuPreview"></nav></aside></div></section>
+    <section id="submissions" class="view"><div class="page-head"><div><p class="eyebrow">WEBSITE FORMS</p><h1>Enquiries & Requests</h1><p>Contact, quote and query forms submitted through the website API.</p></div><button class="ghost" id="refreshSubmissions">↻ Refresh</button></div><div class="submission-stats"><article><small>NEW</small><b id="newSubmissionCount">0</b></article><article><small>IN PROGRESS</small><b id="progressSubmissionCount">0</b></article><article><small>RESOLVED</small><b id="resolvedSubmissionCount">0</b></article></div><div class="panel"><div class="table-tools"><input id="submissionSearch" placeholder="Search name, email or subject..."><select id="submissionFilter"><option value="all">All forms</option><option value="contact">Contact</option><option value="quote">Quote</option><option value="query">Query</option></select></div><div id="submissionList"></div></div></section>
+    <section id="seo" class="view">
+      <div class="page-head"><div><p class="eyebrow">WEBSITE SETTINGS</p><h1>SEO Manager</h1><p>Manage meta titles, descriptions, Open Graph data and search engine settings for each page.</p></div><button class="primary" id="addSeoBtn">+ Add Page SEO</button></div>
+      <div class="panel">
+        <div class="panel-title"><div><h2>All Pages SEO</h2><p>Configure search engine optimization for each route.</p></div><span id="seoCount" class="count-pill">0 pages</span></div>
+        <div id="seoList"></div>
+      </div>
+      <div id="seoModal" class="modal" hidden>
+        <div class="modal-card">
+          <div class="modal-head"><h2 id="seoModalTitle">Edit SEO</h2><button type="button" onclick="document.getElementById('seoModal').hidden=true">×</button></div>
+          <form id="seoForm">
+            <div class="form-grid">
+              <label>Page Route <small>e.g. /, /about, /services</small><input id="seoRoute" required placeholder="/about"></label>
+              <label>Robots<select id="seoRobots"><option value="index, follow">Index, Follow</option><option value="noindex, follow">No Index, Follow</option><option value="index, nofollow">Index, No Follow</option><option value="noindex, nofollow">No Index, No Follow</option></select></label>
+            </div>
+            <label>Meta Title <small>50-60 characters recommended</small><input id="seoTitle" placeholder="Page Title — AviaSafe Aviation"></label>
+            <label>Meta Description <small>150-160 characters recommended</small><textarea id="seoDescription" rows="3" placeholder="Brief page description for search results..."></textarea></label>
+            <label>Meta Keywords <small>Comma separated</small><input id="seoKeywords" placeholder="aviation, MRO, life raft, DGCA"></label>
+            <div class="form-grid">
+              <label>OG Title <small>Social media sharing</small><input id="seoOgTitle" placeholder="Title shown on social share"></label>
+              <label>OG Image <small>Choose from Media Library</small>
+                <div class="upload-line" style="margin-top:7px;gap:10px">
+                  <img id="seoOgPreview" src="" style="display:none;width:72px;height:50px;object-fit:cover;border-radius:6px">
+                  <button type="button" class="file-btn" id="seoPickImage">Choose from Media</button>
+                  <input id="seoOgImage" type="hidden">
+                </div>
+              </label>
+              <div id="seoMediaPicker" hidden style="border:1px solid #dce1e8;border-radius:10px;padding:14px;margin:10px 0;max-height:220px;overflow-y:auto;">
+                <small style="display:block;margin-bottom:10px;color:#8b95a5;">Click an image to select:</small>
+                <div id="seoMediaGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;"></div>
+              </div>
+            </div>
+            <label>OG Description<textarea id="seoOgDescription" rows="2" placeholder="Description for social shares..."></textarea></label>
+            <label>Canonical URL <small>Optional</small><input id="seoCanonical" placeholder="https://aviasafe-cms.vercel.app/about"></label>
+            <input type="hidden" id="seoId">
+            <div class="modal-actions"><button type="button" class="ghost" onclick="document.getElementById('seoModal').hidden=true">Cancel</button><button class="primary" type="submit">Save SEO</button></div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <section id="profile" class="view"><div class="page-head"><div><p class="eyebrow">ACCOUNT</p><h1>My Profile</h1><p>Manage your administrator account and password.</p></div><button class="danger" id="logoutBtn">Log out</button></div><div class="profile-layout"><div class="profile-summary panel"><div class="large-avatar" id="profileAvatar">AD</div><h2 id="profileDisplayName">Administrator</h2><p id="profileRole">Administrator</p><span class="profile-active">● Active account</span></div><form id="profileForm" class="panel profile-form"><h2>Profile information</h2><label>Full name<input id="profileName" required></label><label>Email address<input id="profileEmail" type="email" required></label><label>New password <small>Leave blank to keep current password</small><input id="profilePassword" type="password" minlength="8"></label><button class="primary" type="submit">Save profile</button></form></div></section>
+    <section id="backup" class="view"><div class="page-head"><div><p class="eyebrow">SYSTEM</p><h1>Backup & Restore</h1><p>Export all content changes or restore them on this browser.</p></div></div><div class="backup-grid"><article><h2>Export content</h2><p>Download all text, image and visibility updates as a JSON backup.</p><button class="primary" id="exportBtn">Download backup</button></article><article><h2>Import content</h2><p>Restore a previously exported AviaSafe content backup.</p><label class="file-btn">Choose backup<input type="file" id="importFile" accept=".json"></label></article><article class="danger-zone"><h2>Reset all changes</h2><p>Return the public website to its original content.</p><button class="danger" id="resetBtn">Reset website content</button></article></div></section>
+  </main>
+  <div class="modal" id="contentModal" hidden><div class="modal-card">
+    <div class="modal-head"><div><p class="eyebrow">CONTENT BLOCK</p><h2 id="modalTitle">Add content</h2></div><button id="closeModal">×</button></div>
+    <form id="blockForm"><input type="hidden" id="blockId"><div class="form-grid"><label>What do you want to add?<select id="blockType"><option value="service_card">Service Card</option><option value="image">Standalone Image</option><option value="heading">Heading</option><option value="text">Text / paragraph</option><option value="button">Button / link</option></select></label><label>Internal name <small>Only visible in admin</small><input id="blockLabel" placeholder="e.g. New service card" required></label></div><fieldset class="placement-field"><legend>Where should this appear?</legend><p>Choose the position on the selected page.</p><div class="placement-options"><label><input type="radio" name="placement" value="page_top"><span><i>01</i><b>Top of page</b><small>Below navigation</small></span></label><label><input type="radio" name="placement" value="after_hero" checked><span><i>02</i><b>After hero</b><small>Below main banner</small></span></label><label><input type="radio" name="placement" value="after_content"><span><i>03</i><b>After content</b><small>Below page sections</small></span></label><label><input type="radio" name="placement" value="before_footer"><span><i>04</i><b>Before footer</b><small>Bottom of page</small></span></label></div></fieldset><div id="serviceGridNotice" class="service-grid-notice" hidden><span>✓</span><div><b>Will be added as the next service card</b><small>This card will appear inside the existing Services grid, after the current cards.</small></div></div><label id="blockContentLabel">Service title<textarea id="blockContent" rows="3" placeholder="e.g. Aircraft Battery Maintenance"></textarea></label><label id="blockDescriptionField">Service description<textarea id="blockDescription" rows="4" placeholder="Short description shown inside the card"></textarea></label><div id="blockImageFields"><div class="image-drop"><img id="blockThumb" hidden><div><b>Select card image</b><small>PNG, JPG or WebP</small><label class="file-btn">Choose & upload<input type="file" id="blockUpload" accept="image/*"></label></div></div><label>Uploaded image path<input id="blockImage" placeholder="/uploads/image.jpg" readonly></label><label>Image alt text<input id="blockAlt" placeholder="Describe what is shown"></label></div><label id="blockLinkField">Card/button link<input id="blockLink" placeholder="/contact"></label><label class="toggle-row"><span><b>Publish on website now</b><small>Turn off to save it hidden</small></span><input type="checkbox" id="blockVisible" checked><i></i></label><div class="modal-actions"><button type="button" class="ghost" id="cancelModal">Cancel</button><button type="submit" class="primary">Save & publish</button></div></form>
+  </div></div>
+  <div class="modal" id="elementModal" hidden><div class="modal-card">
+    <div class="modal-head"><div><p class="eyebrow">EXISTING PAGE CONTENT</p><h2 id="elementModalTitle">Edit content</h2></div><button id="closeElementModal">×</button></div>
+    <form id="elementForm"><input type="hidden" id="elementId"><div class="element-location"><span id="existingType">TEXT</span><div><b id="existingLabel"></b><small id="existingSelector"></small></div></div><label id="existingTextField">Website text<textarea id="existingText" rows="6"></textarea></label><div id="existingImageFields" hidden><div class="image-drop"><img id="existingThumb"><div><b>Replace this image</b><small>Upload a new PNG, JPG or WebP</small><label class="file-btn">Choose & upload<input type="file" id="existingUpload" accept="image/*"></label></div></div><label>Image path<input id="existingSrc" readonly></label><label>Image description<input id="existingAlt"></label></div><label id="existingLinkField" hidden>Link destination<input id="existingHref"></label><label class="toggle-row"><span><b>Visible on website</b><small>Hide/delete without losing original content</small></span><input type="checkbox" id="existingVisible" checked><i></i></label><div class="modal-actions"><button type="button" class="danger" id="hideExisting">Delete / hide</button><button type="button" class="ghost" id="cancelElementModal">Cancel</button><button type="submit" class="primary">Update website</button></div></form>
+  </div></div>
+  <div class="modal" id="menuModal" hidden><div class="modal-card small-modal"><div class="modal-head"><div><p class="eyebrow">HEADER NAVIGATION</p><h2 id="menuModalTitle">Add menu item</h2></div><button id="closeMenuModal">×</button></div><form id="menuForm"><input type="hidden" id="menuId"><label>Menu label<input id="menuLabel" placeholder="e.g. Services" required></label><label>Destination URL<input id="menuUrl" placeholder="/services" required></label><div class="form-grid"><label>Open link<select id="menuTarget"><option value="_self">Same window</option><option value="_blank">New window</option></select></label><label>Position<input id="menuOrder" type="number" min="1" value="1"></label></div><label class="toggle-row"><span><b>Visible in header</b><small>Publish this menu link</small></span><input type="checkbox" id="menuVisible" checked><i></i></label><div class="modal-actions"><button type="button" class="ghost" id="cancelMenuModal">Cancel</button><button type="submit" class="primary">Save menu</button></div></form></div></div>
+  <div class="modal" id="capabilityModal" hidden><div class="modal-card"><div class="modal-head"><div><p class="eyebrow">CAPABILITY RECORD</p><h2 id="capabilityModalTitle">Add capability</h2></div><button id="closeCapabilityModal">×</button></div><form id="capabilityForm"><input type="hidden" id="capabilityId"><div class="form-grid"><label>Part number<input id="capabilityPart" placeholder="e.g. AVS-LR-737-10" required></label><label>Manufacturer<input id="capabilityManufacturer" placeholder="e.g. Collins Aerospace" required></label></div><label>Description<textarea id="capabilityDescription" rows="3" placeholder="Capability shown in search results" required></textarea></label><div class="form-grid"><label>Aircraft<input id="capabilityAircraft" list="aircraftOptions" placeholder="e.g. Boeing 737" required></label><label>Chapter<input id="capabilityChapter" list="chapterOptions" placeholder="e.g. Life Raft" required></label></div><datalist id="aircraftOptions"></datalist><datalist id="chapterOptions"></datalist><div class="form-grid"><label>Service page slug <small>Optional, e.g. life-raft</small><input id="capabilityServiceSlug" placeholder="life-raft"></label><label>Display order<input id="capabilityOrder" type="number" min="1" value="1"></label></div><label class="toggle-row"><span><b>Published on website</b><small>Hidden records do not appear in public search</small></span><input type="checkbox" id="capabilityVisible" checked><i></i></label><div class="modal-actions"><button type="button" class="ghost" id="cancelCapabilityModal">Cancel</button><button type="submit" class="primary">Save & publish</button></div></form></div></div>
+  <iframe id="pageScanner" hidden></iframe>
+  <div id="toast"></div>
+  <script src="/api-config.js"></script>
+  <script src="/admin/admin.js?v=20260729-netlify-api"></script>
+</body>
+</html>

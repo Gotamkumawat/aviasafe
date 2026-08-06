@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login · AviaSafe Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/styles.css?v=admin-login-layout-fix-2026-08">
+</head>
+<body class="login-page login-v2">
+  <section class="login-showcase">
+    <div class="login-brand"><span class="shield-logo">✈</span><div><b>AviaSafe</b><small>Content Management System</small></div></div>
+    <div class="showcase-body">
+      <div class="studio-pill">✈ &nbsp; AVIATION CONTENT STUDIO</div>
+      <h1>Manage your complete<br>website <span>with confidence.</span></h1>
+      <p>Pages, services, images and navigation – all<br>connected to your MySQL database.</p>
+      <div class="login-features">
+        <article><i>▤</i><div><b>Powerful CMS</b><small>Manage pages, services & content effortlessly.</small></div></article>
+        <article><i>▧</i><div><b>Media Management</b><small>Upload, organize and manage all your media assets.</small></div></article>
+        <article><i>♢</i><div><b>Secure & Reliable</b><small>Built with security and performance in mind.</small></div></article>
+        <article><i>▥</i><div><b>Real-time Updates</b><small>See changes live and keep your website always fresh.</small></div></article>
+      </div>
+    </div>
+    <div class="plane-scene"><img src="/img/air.png" alt="AviaSafe aircraft"></div>
+    <div class="trust-box"><span>♢</span><div><b>Secure. Fast. Reliable.</b><small>Trusted by aviation content managers worldwide.</small></div></div>
+  </section>
+  <main class="login-main">
+    <div class="login-dots"></div>
+    <form id="loginForm" class="login-card login-card-v2">
+      <div class="portal-shield">✈</div>
+      <p class="eyebrow">ADMIN PORTAL</p>
+      <h2>Welcome back <span>👋</span></h2>
+      <p class="login-sub">Sign in to access your AviaSafe admin dashboard.</p>
+      <label>Email address<div class="login-input"><span>✉</span><input id="loginEmail" type="email" value="admin@aviasafe.local" required autocomplete="username"></div></label>
+      <label>Password<div class="login-input"><span>♙</span><input id="loginPassword" type="password" required autocomplete="current-password"><button type="button" id="showPassword">◉</button></div></label>
+      <div class="login-options"><label><input id="rememberMe" type="checkbox" checked><i>✓</i><span>Remember me</span></label><button type="button" id="forgotPassword">Forgot password?</button></div>
+      <div id="loginError"></div>
+      <button class="login-submit" type="submit">Sign in to dashboard &nbsp; →</button>
+      <div class="login-divider"><span>or continue with</span></div>
+      <button class="google-login" type="button" id="googleLogin"><b>G</b> Sign in with Google</button>
+      <div class="protected-note">♢ &nbsp; Protected with industry-standard security</div>
+    </form>
+  </main>
+  <div id="loginToast"></div>
+  <script src="/api-config.js"></script>
+  <script src="/admin/login.js?v=20260729-netlify-api"></script>
+</body>
+</html>

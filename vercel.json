@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "schema.sql"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/admin/login", "destination": "/admin/login.html" },
+    { "source": "/sms", "destination": "/index.html" },
+    { "source": "/services", "destination": "/index.html" },
+    { "source": "/approvals", "destination": "/index.html" },
+    { "source": "/mro-facility", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/index.html" },
+    { "source": "/quote", "destination": "/index.html" },
+    { "source": "/query", "destination": "/index.html" },
+    { "source": "/capability-search", "destination": "/index.html" },
+    { "source": "/service/(.*)", "destination": "/index.html" }
+  ]
+}
