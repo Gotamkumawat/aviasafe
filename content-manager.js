@@ -86,7 +86,10 @@
     renderedBlockSignature=signature;
     document.querySelectorAll('.cms-added-content').forEach(el=>el.remove());
     document.querySelectorAll('.cms-service-card').forEach(el=>el.remove());
-    const visible = blocks.filter(b => b.visible).sort((a,b) => a.order-b.order);
+    let visible = blocks.filter(b => b.visible).sort((a,b) => a.order-b.order);
+    if (activePath==='/services') {
+      visible = visible.filter(b => b.placement === 'service_grid');
+    }
     if (!visible.length) return;
     const groups = Object.groupBy ? Object.groupBy(visible,b=>b.placement||'before_footer') :
       visible.reduce((all,b)=>{(all[b.placement||'before_footer']||=[]).push(b);return all},{});
