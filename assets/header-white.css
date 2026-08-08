@@ -4889,7 +4889,7 @@ div[class*="bg-[linear-gradient(160deg"] a {
   height: 360px !important;
   opacity: 0.6 !important;
   pointer-events: none !important;
-  background-image: url('/img/india.png') !important;
+  background-image: url('/img/india1.png') !important;
   background-size: contain !important;
   background-repeat: no-repeat !important;
   background-position: center !important;
@@ -9001,6 +9001,132 @@ body::before {
   }
 }
 
+/* Services catalogue: spacious, consistent cards without changing other pages. */
+body[data-cms-path="/services"] .mro-section .container {
+  max-width: 1280px !important;
+}
+
+body[data-cms-path="/services"] .mro-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 28px !important;
+  align-items: stretch !important;
+}
+
+body[data-cms-path="/services"] .mro-card {
+  display: flex !important;
+  min-width: 0 !important;
+  flex-direction: column !important;
+  border-top-width: 1px !important;
+  cursor: pointer !important;
+}
+
+body[data-cms-path="/services"] .about-lite-hero .ahb-card {
+  cursor: pointer !important;
+}
+
+body[data-cms-path="/services"] .about-lite-hero .ahb-card:focus-visible {
+  outline: 3px solid rgba(143, 210, 244, .8) !important;
+  outline-offset: 3px !important;
+}
+
+body[data-cms-path="/services"] .mro-card:focus-visible {
+  outline: 3px solid rgba(143, 210, 244, .8) !important;
+  outline-offset: 3px !important;
+}
+
+body[data-cms-path="/services"] .mro-media {
+  height: 220px !important;
+  flex: 0 0 220px !important;
+}
+
+body[data-cms-path="/services"] .mro-media img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+body[data-cms-path="/services"] .mro-body {
+  display: flex !important;
+  min-height: 178px !important;
+  flex: 1 !important;
+  flex-direction: column !important;
+  padding: 18px 20px !important;
+}
+
+body[data-cms-path="/services"] .mro-body h3 {
+  margin: 0 0 8px !important;
+  font-size: 19px !important;
+}
+
+body[data-cms-path="/services"] .mro-body p {
+  display: -webkit-box !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  color: #68778a !important;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+}
+
+body[data-cms-path="/services"] .mro-enquire {
+  min-height: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #245a84 !important;
+  box-shadow: none !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+body[data-cms-path="/services"] .mro-enquire span {
+  color: #6ba9c9 !important;
+}
+
+body[data-cms-path="/services"] .mro-enquire:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #173f60 !important;
+}
+
+body[data-cms-path="/services"] .mro-enquire {
+  align-self: flex-start !important;
+  margin-top: auto !important;
+  padding: 0 !important;
+}
+
+/* The All Services page is a catalogue only: keep company/promotional blocks off it. */
+body[data-cms-path="/services"] .also-label,
+body[data-cms-path="/services"] .also-chips,
+body[data-cms-path="/services"] .svc-why,
+body[data-cms-path="/services"] .journey-section,
+body[data-cms-path="/services"] .trio-section,
+body[data-cms-path="/services"] .partner-wrap,
+body[data-cms-path="/services"] .partner-dark {
+  display: none !important;
+}
+
+@media (max-width: 960px) {
+  body[data-cms-path="/services"] .mro-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 20px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  body[data-cms-path="/services"] .mro-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  body[data-cms-path="/services"] .mro-media {
+    height: 200px !important;
+    flex-basis: 200px !important;
+  }
+}
+
 /* Approvals: keep the statistics panel in normal document flow and below the
    fixed header. The older negative offset/z-index made it cover the navbar. */
 body[data-cms-path="/approvals"] .approve-stats,
@@ -9468,4 +9594,274 @@ body[data-cms-path="/approvals"] .faq-ic {
 [data-theme="dark"] body[data-cms-path="/approvals"] .faq-q {
   color: #eef5fc !important;
   -webkit-text-fill-color: #eef5fc !important;
+}
+
+/* Header alignment: brand stays left, navigation stays on the right. */
+@media (min-width: 961px) {
+  body.app-ready {
+    padding-top: 130px !important;
+  }
+
+  .navbar {
+    min-height: 130px !important;
+  }
+
+  .navbar-inner {
+    width: min(100% - 64px, 1320px) !important;
+    height: 130px !important;
+    min-height: 130px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    justify-content: flex-start !important;
+  }
+
+  .navbar-logo {
+    flex: 0 0 auto !important;
+    margin-right: auto !important;
+  }
+
+  .navbar-full-logo {
+    width: auto !important;
+    height: 122px !important;
+    max-height: 122px !important;
+  }
+
+  .navbar-links {
+    order: 1 !important;
+    margin: 0 22px 0 auto !important;
+    gap: 14px !important;
+  }
+
+  .navbar-links a {
+    padding: 10px 0 !important;
+    font-size: 13.5px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .navbar-actions {
+    order: 2 !important;
+    margin-left: 0 !important;
+  }
+}
+
+/* Keep the search modal above the fixed header so its search input is visible. */
+.s2-overlay {
+  z-index: 2000 !important;
+  align-items: center !important;
+  padding: 24px !important;
+}
+
+.s2-panel {
+  max-height: calc(100vh - 48px) !important;
+  overflow-y: auto !important;
+}
+
+/* Footer right-side flight map. */
+.footer.footer::before {
+  display: block !important;
+  background: url('/img/india1.png') center / contain no-repeat !important;
+  opacity: .6 !important;
+  width: 340px !important;
+  height: 430px !important;
+}
+
+/* Approvals statistics: centered, equal-height and easy to scan. */
+body[data-cms-path="/approvals"] .appr-stats {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+}
+
+body[data-cms-path="/approvals"] .appr-stat {
+  display: flex !important;
+  min-height: 174px !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+body[data-cms-path="/approvals"] .appr-stat::after {
+  display: none !important;
+}
+
+body[data-cms-path="/approvals"] .appr-stat-ic {
+  margin-inline: auto !important;
+}
+
+body[data-cms-path="/approvals"] .appr-stat strong {
+  margin: 0 0 6px !important;
+  font-size: 28px !important;
+  line-height: 1 !important;
+}
+
+body[data-cms-path="/approvals"] .appr-stat-l {
+  display: block !important;
+  max-width: 132px !important;
+  min-height: 34px !important;
+  line-height: 1.35 !important;
+}
+
+@media (max-width: 960px) {
+  body[data-cms-path="/approvals"] .appr-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 620px) {
+  body[data-cms-path="/approvals"] .appr-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* About MRO facility: give the existing content a clear premium two-column layout. */
+body[data-cms-path="/about"] .two-col {
+  max-width: 1240px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr) !important;
+  align-items: center !important;
+  gap: clamp(32px, 4vw, 56px) !important;
+  padding: 58px 0 !important;
+}
+
+body[data-cms-path="/about"] .about-figure {
+  width: 100% !important;
+  max-width: none !important;
+  overflow: visible !important;
+}
+
+body[data-cms-path="/about"] .about-figure img {
+  aspect-ratio: 4 / 3.25 !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 22px !important;
+}
+
+body[data-cms-path="/about"] .about-figure-badge {
+  right: -22px !important;
+  bottom: 28px !important;
+  min-width: 118px !important;
+  padding: 14px 16px !important;
+  border-radius: 16px !important;
+}
+
+body[data-cms-path="/about"] .about-figure-badge strong {
+  font-size: 30px !important;
+  line-height: 1 !important;
+}
+
+body[data-cms-path="/about"] .two-col > div:last-child {
+  padding: 8px 0 !important;
+}
+
+body[data-cms-path="/about"] .two-col .eyebrow {
+  margin-bottom: 16px !important;
+  color: #376581 !important;
+}
+
+body[data-cms-path="/about"] .two-col h2 {
+  max-width: 580px !important;
+  margin: 0 0 14px !important;
+  color: #17344d !important;
+  -webkit-text-fill-color: #17344d !important;
+  font-size: clamp(30px, 3.2vw, 42px) !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.045em !important;
+}
+
+body[data-cms-path="/about"] .two-col > div > p {
+  max-width: 630px !important;
+  margin: 0 0 18px !important;
+  color: #5f7182 !important;
+  font-size: 16px !important;
+  line-height: 1.65 !important;
+}
+
+body[data-cms-path="/about"] .two-col .tick-list {
+  display: grid !important;
+  gap: 7px !important;
+  margin: 0 0 18px !important;
+}
+
+body[data-cms-path="/about"] .two-col .tick-list li {
+  margin: 0 !important;
+  padding: 9px 12px 9px 38px !important;
+  border: 1px solid #dce8ef !important;
+  border-radius: 10px !important;
+  background: #f8fbfd !important;
+  color: #24384b !important;
+  font-size: 13.5px !important;
+  line-height: 1.45 !important;
+}
+
+body[data-cms-path="/about"] .two-col .btn-gold {
+  margin-top: 2px !important;
+  padding: 14px 22px !important;
+  background: linear-gradient(135deg, #17344d, #376581) !important;
+}
+
+@media (max-width: 820px) {
+  body[data-cms-path="/about"] .two-col {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+    padding: 48px 0 !important;
+  }
+
+  body[data-cms-path="/about"] .about-figure {
+    max-width: 540px !important;
+    margin: 0 auto !important;
+  }
+
+  body[data-cms-path="/about"] .about-figure-badge {
+    right: 14px !important;
+  }
+}
+
+/* One sky-blue service-details layout for every service card destination.
+   Header and footer deliberately remain the site's shared components. */
+body[data-cms-path^="/service/"] .api-service-hero {
+  min-height: 0 !important;
+  padding: clamp(48px, 7vw, 86px) max(24px, 7vw) !important;
+  background: linear-gradient(120deg, #8fd2f4 0%, #64bde8 48%, #387fb6 100%) !important;
+  gap: clamp(28px, 5vw, 70px) !important;
+}
+
+body[data-cms-path^="/service/"] .api-service-hero h1 {
+  color: #102c49 !important;
+  font-size: clamp(34px, 4.8vw, 58px) !important;
+}
+
+body[data-cms-path^="/service/"] .api-service-hero p,
+body[data-cms-path^="/service/"] .api-service-hero span,
+body[data-cms-path^="/service/"] .api-service-hero > div > a:first-child {
+  color: #254866 !important;
+}
+
+body[data-cms-path^="/service/"] .api-hero-kicker {
+  margin: 22px 0 4px !important;
+  color: #163c5c !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: .16em !important;
+}
+
+body[data-cms-path^="/service/"] .api-service-hero > img {
+  height: clamp(240px, 28vw, 360px) !important;
+  border: 10px solid rgba(255,255,255,.66) !important;
+  box-shadow: 0 22px 48px rgba(19, 70, 109, .22) !important;
+}
+
+body[data-cms-path^="/service/"] .api-service-hero .cms-button,
+body[data-cms-path^="/service/"] .api-service-body .cms-button {
+  background: #175e92 !important;
+  color: #fff !important;
+}
+
+body[data-cms-path^="/service/"] .api-service-body {
+  padding-top: clamp(48px, 7vw, 82px) !important;
+}
+
+body[data-cms-path="/services"] .mro-card[data-service-url] {
+  cursor: pointer !important;
 }
