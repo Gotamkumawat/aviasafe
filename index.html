@@ -5,15 +5,48 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AviSafe Aviation — Authorized Aviation Repair Station</title>
-    <script type="module" crossorigin src="./assets/index-c_4nuuty.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-ceo4jm_n.css">
+    <script type="module" crossorigin src="/assets/index-c_4nuuty.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-ceo4jm_n.css">
     <link rel="stylesheet" href="./assets/header-white.css?v=approvals-simple-ui-2026-08">
   </head>
   <body>
     <div id="root"></div>
     <script src="/api-config.js"></script>
-    <script src="/content-manager.js"></script>
+    <script src="/content-manager.js?v=logo-home-reload-12"></script>
     <script src="/capability-search.js?v=3-fields"></script>
+    <script>
+      // Safari/Chrome can restore an empty React root from its back-forward cache.
+      // Reload once in that case so browser Back/Forward always shows the page.
+      (function () {
+        function repairBlankRestore() {
+          const root = document.getElementById('root');
+          const logoHomeNavigation = sessionStorage.getItem('aviasafe-logo-home-navigation') === '1';
+          // A React shell can have a non-empty #root while its route content is
+          // missing. Treat that state as blank after a logo-to-Home navigation.
+          const homeRendered = root && root.querySelector('main')?.childElementCount > 0;
+          if (root && (root.childElementCount && (!logoHomeNavigation || homeRendered))) {
+            if (logoHomeNavigation && homeRendered) sessionStorage.removeItem('aviasafe-logo-home-navigation');
+            return;
+          }
+          const key = 'aviasafe-back-recovery:' + location.pathname;
+          if (sessionStorage.getItem(key)) return;
+          sessionStorage.setItem(key, '1');
+          sessionStorage.removeItem('aviasafe-logo-home-navigation');
+          location.reload();
+        }
+        window.addEventListener('pageshow', function (event) {
+          if (event.persisted) location.reload();
+        });
+        // React's restored history entry can be blank even when #root still has
+        // hidden nodes. A normal reload is reliable for every browser Back/Forward.
+        window.addEventListener('popstate', function () {
+          location.reload();
+        });
+        window.addEventListener('load', function () {
+          setTimeout(repairBlankRestore, 2500);
+        });
+      })();
+    </script>
     <script>
       (function() {
         let ready = false;

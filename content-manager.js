@@ -10,6 +10,62 @@
   let activePath = pathNow();
   let selected = null, currentPage = null, currentSite=null, applying = false, renderedBlockSignature = '';
 
+  // Keep the Services-page MRO cards aligned with the detail pages used by the
+  // matching cards in Home > Our Services.  The CMS catalog has historically
+  // used a few different slugs for the same service, so resolve by title first.
+  const homeServiceRoutes = {
+    'life raft': '/service/life-raft',
+    'life raft and survival kit': '/service/life-raft-survival-kit',
+    'life raft & survival kit': '/service/life-raft-survival-kit',
+    'life vest': '/service/life-vest',
+    'oxygen cylinder': '/service/oxygen-cylinder-regulator',
+    'oxygen cylinder and regulator': '/service/oxygen-cylinder-regulator',
+    'oxygen cylinder & regulator': '/service/oxygen-cylinder-regulator',
+    'hydrostatic testing': '/service/hydrostatic-testing',
+    'escape slide': '/service/escape-slide',
+    'aircraft headset': '/service/aircraft-headset',
+    'oxygen mask and stowage box': '/service/oxygen-mask-stowage-box',
+    'oxygen mask & stowage box': '/service/oxygen-mask-stowage-box',
+    'aircraft fire extinguisher': '/service/aircraft-fire-extinguisher'
+  };
+  const normaliseServiceTitle = value => String(value || '').toLowerCase().replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+  // `link` is returned by the same catalog that powers Home > Our Services.
+  // Prefer it when present; the title map covers the differently named legacy
+  // MRO cards on /services.
+  const serviceDetailUrl = service => homeServiceRoutes[normaliseServiceTitle(service.title)] || service.link || `/service/${service.slug}`;
+  const mroCardUrl = card => card.dataset.serviceUrl || homeServiceRoutes[normaliseServiceTitle(card.querySelector('h3')?.textContent)];
+
+  // Match the Home page behaviour: the complete service card opens its detail page.
+  document.addEventListener('click', event => {
+    const card=event.target.closest('.mro-grid .mro-card');
+    const url=card&&mroCardUrl(card);
+    if(!url)return;
+    // The built-in React card initially uses Contact for its CTA; replace that
+    // fallback too, so it cannot lead to a different page before CMS loads.
+    if(event.target.closest('.mro-enquire')) event.preventDefault();
+    else if(event.target.closest('a,button,input,select,textarea')) return;
+    location.assign(url);
+  }, true);
+  document.addEventListener('keydown', event => {
+    const card=event.target.closest('.mro-grid .mro-card');
+    const url=card&&mroCardUrl(card);
+    if(!url || !['Enter',' '].includes(event.key)) return;
+    event.preventDefault();
+    location.assign(url);
+  });
+
+  // Service details are CMS-rendered after React has mounted.  A hard Home
+  // navigation from the brand avoids React retaining that replaced <main>
+  // during a client-side route change, which could otherwise show a white page.
+  document.addEventListener('click', event => {
+    const logo=event.target.closest('a.navbar-logo');
+    if(!logo || pathNow()==='/') return;
+    event.preventDefault();
+    sessionStorage.setItem('aviasafe-logo-home-navigation', '1');
+    location.assign('/');
+  }, true);
+
+
   const api = async (url, options) => {
     const response = await fetch(apiUrl(url), { headers: { 'Content-Type':'application/json', ...(options?.headers || {}) }, ...options });
     if (!response.ok) throw new Error((await response.json().catch(() => ({}))).error || 'API error');
@@ -150,18 +206,22 @@
     if(!currentSite)return;
     if(activePath==='/services'){
       const grid=document.querySelector('.mro-grid');if(!grid)return;
-      const signature=JSON.stringify(currentSite.services.map(s=>[s.id,s.title,s.image,s.description,s.visible]));
+      // Ignore incomplete/test records that cannot represent a real service page.
+      const services=currentSite.services.filter(s=>s.visible&&s.slug&&!String(s.slug).startsWith('/')&&s.title&&(s.tagline||s.description));
+      const signature=JSON.stringify(services.map(s=>[s.id,s.title,s.image,s.description,s.visible]));
       if(grid.dataset.apiCatalog!==signature){
         grid.dataset.apiCatalog=signature;
-        grid.innerHTML=currentSite.services.filter(s=>s.visible).map(s=>`<article class="mro-card" data-service-id="${s.id}"><div class="mro-media"><img src="${esc(assetUrl(s.image))}" alt="${esc(s.title)}" loading="lazy"></div><div class="mro-body"><h3>${esc(s.title)}</h3><p>${esc(s.tagline||s.description)}</p><a href="/service/${esc(s.slug)}" class="mro-enquire">View Service <span>→</span></a></div></article>`).join('');
+        grid.innerHTML=services.map(s=>{const url=serviceDetailUrl(s);return `<article class="mro-card" data-service-id="${s.id}" data-service-url="${esc(url)}" role="link" tabindex="0" aria-label="View ${esc(s.title)} service details"><div class="mro-media"><img src="${esc(assetUrl(s.image))}" alt="${esc(s.title)}" loading="lazy"></div><div class="mro-body"><h3>${esc(s.title)}</h3><p>${esc(s.tagline||s.description)}</p><a href="${esc(url)}" class="mro-enquire">Enquire Now <span>→</span></a></div></article>`}).join('');
       }
     }
+    // One consistent, CMS-powered detail layout for every service. The site's
+    // existing React Header and Footer stay outside <main> and are untouched.
     if(activePath.startsWith('/service/')&&currentSite.service){
       const main=document.querySelector('main');if(!main)return;const s=currentSite.service;
       const signature=JSON.stringify([s.id,s.title,s.image,s.tagline,s.description,s.points]);
       if(main.dataset.apiService===signature)return;
       main.dataset.apiService=signature;
-      main.innerHTML=`<section class="api-service-hero"><div><a href="/services">Services</a><span> / ${esc(s.title)}</span><h1>${esc(s.title)}</h1><p>${esc(s.tagline)}</p><a class="cms-button" href="/contact">Request a Quote</a></div><img src="${esc(assetUrl(s.image))}" alt="${esc(s.title)}"></section><section class="api-service-body"><div><p class="api-kicker">SERVICE OVERVIEW</p><h2>Professional ${esc(s.title)} Services</h2><p>${esc(s.description)}</p><h3>Service capabilities</h3><ul>${(s.points||[]).map(point=>`<li><span>✓</span>${esc(point)}</li>`).join('')}</ul><a class="cms-button" href="/contact">Enquire Now</a></div><aside><img src="${esc(assetUrl(s.image))}" alt="${esc(s.title)}"><b>DGCA Approved Facility</b><small>Inspection, overhaul and certification by qualified aviation technicians.</small></aside></section>`;
+      main.innerHTML=`<section class="api-service-hero"><div><a href="/services">Services</a><span> / ${esc(s.title)}</span><p class="api-hero-kicker">SERVICE DETAILS</p><h1>${esc(s.title)}</h1><p>${esc(s.tagline)}</p><a class="cms-button" href="/contact">Request a Quote</a></div><img src="${esc(assetUrl(s.image))}" alt="${esc(s.title)}"></section><section class="api-service-body"><div><p class="api-kicker">SERVICE OVERVIEW</p><h2>Professional ${esc(s.title)} Services</h2><p>${esc(s.description)}</p><h3>Service capabilities</h3><ul>${(s.points||[]).map(point=>`<li><span>✓</span>${esc(point)}</li>`).join('')}</ul><a class="cms-button" href="/contact">Enquire Now</a></div><aside><img src="${esc(assetUrl(s.image))}" alt="${esc(s.title)}"><b>DGCA Approved Facility</b><small>Inspection, overhaul and certification by qualified aviation technicians.</small></aside></section>`;
     }
   }
   function renderNavigation(items){
