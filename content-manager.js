@@ -35,24 +35,14 @@
   const serviceDetailUrl = service => homeServiceRoutes[normaliseServiceTitle(service.title)] || service.link || `/service/${service.slug}`;
   const mroCardUrl = card => card.dataset.serviceUrl || homeServiceRoutes[normaliseServiceTitle(card.querySelector('h3')?.textContent)];
 
-  // Match the Home page behaviour: the complete service card opens its detail page.
+  // The Services-page MRO cards are informational only.  Keep them from
+  // navigating anywhere, including the built-in React CTA before CMS loads.
   document.addEventListener('click', event => {
     const card=event.target.closest('.mro-grid .mro-card');
-    const url=card&&mroCardUrl(card);
-    if(!url)return;
-    // The built-in React card initially uses Contact for its CTA; replace that
-    // fallback too, so it cannot lead to a different page before CMS loads.
-    if(event.target.closest('.mro-enquire')) event.preventDefault();
-    else if(event.target.closest('a,button,input,select,textarea')) return;
-    location.assign(url);
-  }, true);
-  document.addEventListener('keydown', event => {
-    const card=event.target.closest('.mro-grid .mro-card');
-    const url=card&&mroCardUrl(card);
-    if(!url || !['Enter',' '].includes(event.key)) return;
+    if(!card || pathNow()!=='/services') return;
     event.preventDefault();
-    location.assign(url);
-  });
+    event.stopImmediatePropagation();
+  }, true);
 
   // Service details are CMS-rendered after React has mounted.  A hard Home
   // navigation from the brand avoids React retaining that replaced <main>
@@ -211,7 +201,7 @@
       const signature=JSON.stringify(services.map(s=>[s.id,s.title,s.image,s.description,s.visible]));
       if(grid.dataset.apiCatalog!==signature){
         grid.dataset.apiCatalog=signature;
-        grid.innerHTML=services.map(s=>{const url=serviceDetailUrl(s);return `<article class="mro-card" data-service-id="${s.id}" data-service-url="${esc(url)}" role="link" tabindex="0" aria-label="View ${esc(s.title)} service details"><div class="mro-media"><img src="${esc(assetUrl(s.image))}" alt="${esc(s.title)}" loading="lazy"></div><div class="mro-body"><h3>${esc(s.title)}</h3><p>${esc(s.tagline||s.description)}</p><a href="${esc(url)}" class="mro-enquire">Enquire Now <span>→</span></a></div></article>`}).join('');
+        grid.innerHTML=services.map(s=>`<article class="mro-card" data-service-id="${s.id}"><div class="mro-media"><img src="${esc(assetUrl(s.image))}" alt="${esc(s.title)}" loading="lazy"></div><div class="mro-body"><h3>${esc(s.title)}</h3><p>${esc(s.tagline||s.description)}</p><span class="mro-enquire" aria-disabled="true">Enquire Now <span>→</span></span></div></article>`).join('');
       }
     }
     // One consistent, CMS-powered detail layout for every service. The site's
